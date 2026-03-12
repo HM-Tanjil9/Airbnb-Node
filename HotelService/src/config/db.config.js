@@ -8,7 +8,6 @@ const config = {
     database: process.env.DB_NAME || "airbnb_dev",
     host: process.env.DB_HOST || "localhost",
     dialect: "mysql",
-    logging: console.log,
   },
 };
 
