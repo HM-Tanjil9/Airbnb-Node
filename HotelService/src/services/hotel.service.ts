@@ -1,5 +1,9 @@
 import { createHotelDto } from "../dto/hotel.dto";
-import { createHotel, getHotelById } from "../repository/hotel.repository";
+import {
+  createHotel,
+  getAllHotels,
+  getHotelById,
+} from "../repository/hotel.repository";
 
 const blockListedAddress = ["123 Fake St", "456 Fake St", "789 Fake St"];
 
@@ -18,4 +22,9 @@ export async function createHotelService(hotelData: createHotelDto) {
 export async function getHotelByIdService(id: number) {
   const hotel = await getHotelById(id);
   return hotel;
+}
+
+export async function getAllHotelsService() {
+  const hotels = await getAllHotels();
+  return hotels;
 }
