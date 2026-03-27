@@ -5,7 +5,7 @@
 
 generator client {
   provider = "prisma-client"
-  output   = "../src/generated/prisma"
+  output   = "../generated/prisma"
 }
 
 datasource db {
@@ -22,11 +22,21 @@ model Booking {
   id                   Int                  @id @default(autoincrement())
   userId               Int
   hotelId              Int
+  createdAt            DateTime             @default(now())
+  updatedAt            DateTime             @updatedAt
+  bookingAmount        Int
+  status               BookingStatus        @default(PENDING)
+  totalGuest           Int
+  idempotencyKeyId     Int?                 @unique
+  idempotencyKey       IdempotencyKey?      @relation(fields: [idempotencyKeyId], references: [id])
+}
+
+model IdempotencyKey{
+  id                   Int                  @id @default(autoincrement())
+  key                  String               @unique  //uuid
   createdAt            DateTime @default(now())
   updatedAt            DateTime @updatedAt
-  bookingAmount        Int
-  status               BookingStatus
-  totalGuest           Int
+  booking              Booking?
 }
 
 
