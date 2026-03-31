@@ -12,6 +12,7 @@ export default defineConfig({
     path: "prisma/migrations",
   },
   datasource: {
-    url: env("DATABASE_URL"),
+    // using adapter method thats why off
+    // url: env("DATABASE_URL"),
   },
 });
