@@ -8,6 +8,8 @@ import {
 } from "./middlewares/error.middleware";
 import logger from "./config/logger.config";
 import { attachCorrelationIdMiddleware } from "./middlewares/correlation.middleware";
+import { setupMailerWorker } from "./processors/email.processor";
+import { NotificationDto } from "./dto/notification.dto";
 import { addEmailToQueue } from "./producers/email.producer";
 const app = express();
 
@@ -31,16 +33,17 @@ app.use(genericErrorHandler);
 app.listen(serverConfig.PORT, () => {
   logger.info(`Server is running on http://localhost:${serverConfig.PORT}`);
   logger.info(`Press Ctrl+C to stop the server.`);
+  setupMailerWorker();
+  logger.info(`Mailer worker setup completed`);
 
-  for (let i = 0; i < 10; i++) {
-    addEmailToQueue({
-      to: `Sample from booking ${i}`,
-      subject: "Sample booking email",
-      templateId: "sample-booking-template",
-      params: {
-        name: "Tanjil Rahman",
-        orderId: "123",
-      },
-    });
-  }
+  const sampleNotification: NotificationDto = {
+    to: "Sample",
+    subject: "Sample email",
+    templateId: "sample-template",
+    params: {
+      name: "Tanjil Rahman",
+      orderId: "123",
+    },
+  };
+  addEmailToQueue(sampleNotification);
 });
