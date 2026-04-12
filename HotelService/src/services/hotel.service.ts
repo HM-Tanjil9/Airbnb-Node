@@ -1,10 +1,7 @@
 import { createHotelDto } from "../dto/hotel.dto";
-import {
-  createHotel,
-  getAllHotels,
-  getHotelById,
-  softDeleteHotel,
-} from "../repository/hotel.repository";
+import { HotelRepository } from "../repository/hotel.repository";
+
+const hotelRepository = new HotelRepository();
 
 const blockListedAddress = ["123 Fake St", "456 Fake St", "789 Fake St"];
 
@@ -16,21 +13,21 @@ export async function createHotelService(hotelData: createHotelDto) {
   if (isBlockListedAddress(hotelData.address)) {
     throw new Error("Address is blacklisted");
   }
-  const hotel = await createHotel(hotelData);
+  const hotel = await hotelRepository.create(hotelData);
   return hotel;
 }
 
 export async function getHotelByIdService(id: number) {
-  const hotel = await getHotelById(id);
+  const hotel = await hotelRepository.findById(id);
   return hotel;
 }
 
 export async function getAllHotelsService() {
-  const hotels = await getAllHotels();
+  const hotels = await hotelRepository.findAll();
   return hotels;
 }
 
 export async function deleteHotelService(id: number) {
-  const hotel = await softDeleteHotel(id);
+  const hotel = await hotelRepository.softDelete(id);
   return hotel;
 }
