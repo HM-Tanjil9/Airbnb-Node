@@ -53,7 +53,7 @@ export class HotelRepository extends BaseRepository<Hotel> {
   constructor() {
     super(Hotel);
   }
-  async findAll() {
+  async findAll(): Promise<Hotel[]> {
     const hotels = await this.model.findAll({
       where: {
         deletedAt: null,
