@@ -5,7 +5,7 @@ import (
 )
 
 func main() {
-	cfg := app.NewConfig(":3001")
+	cfg := app.NewConfig()
 	app := app.NewApplication(cfg)
 	app.Run()
 }
