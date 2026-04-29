@@ -6,6 +6,7 @@ import (
 )
 
 type UserService interface {
+	CreateUser() error
 	GetUserById() error
 }
 
@@ -22,5 +23,11 @@ func NewUserService(_userRepository db.UserRepository) UserService {
 func (u *UserServiceImpl) GetUserById() error {
 	fmt.Println("Fetching user in UserService")
 	u.UserRepository.GetById()
+	return nil
+}
+
+func (u *UserServiceImpl) CreateUser() error {
+	fmt.Println("Create user in UserService")
+	u.UserRepository.Create()
 	return nil
 }
